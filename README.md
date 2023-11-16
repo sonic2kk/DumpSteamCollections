@@ -50,23 +50,23 @@ Currently no pre-built releases are available, the program has to be compiled ma
 A small script has been provided to build the program, which runs `g++` to create the executable, and strips it to reduce binary size. However, you're free to compile manually if you want.
 
 ## Usage
-Compile the C++ code with `sh build.sh` and run `./get_steam_leveldb_collections`. Optionally, you can provide a Steam User ID to search for, such as `./get_steam_leveldb_collections 123456789`.
+Compile the C++ code with `sh build.sh` and run `./dumpsteamcollections`. Optionally, you can provide a Steam User ID to search for, such as `./dumpsteamcollections 123456789`.
 
 From here, the output can be parsed with a tool such as [JQ](https://github.com/jqlang/jq) on the commandline. Some examples:
 
 ```bash
 # Get collections JSON for default Steam user (ideal if you only have one Steam User logged in)
-./get_steam_leveldb_collections
+./dumpsteamcollections
 
 # Get collections JSON for a specific Steam User ID
 # a list can be found at your Steam install path, i.e. $HOME/.local/share/Steam/config/loginusers.vdf
-./get_steam_leveldb_collections 123456789
+./dumpsteamcollections 123456789
 
 # Create file with formatted JSON
-./get_steam_leveldb_collections | jq '.' > formatted_collections.json
+./dumpsteamcollections | jq '.' > formatted_collections.json
 
 # Output only Steam Collection information
-./get_steam_leveldb_collections | jq -r '.[][1] | select(.key | startswith("user-collections")) | select (.value != null) | .value | fromjson | tojson'
+./dumpsteamcollections | jq -r '.[][1] | select(.key | startswith("user-collections")) | select (.value != null) | .value | fromjson | tojson'
 
 # Find Steam Collection Key from name (i.e. return uc-xxxxxxxx from 'Action Games')
 ## Function to find the Steam Collection Key by name from the JSON file using jq
@@ -85,7 +85,7 @@ function findSteamCollectionKeyFromName {
 }
 
 collections_dump_path="/tmp/collections_dump.json"
-./get_steam_leveldb_collections > "${collections_dump_path}"
+./dumpsteamcollections > "${collections_dump_path}"
 findSteamCollectionKeyFromName "SEGA" "${collections_dump_path}"  # Find Key ID for collection named "SEGA"
 ```
 
