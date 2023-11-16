@@ -1,7 +1,9 @@
 # DumpSteamCollections
 C++ program for Linux to dump Steam Collection information JSON from LevelDB. This program will print the raw, unformatted JSON, which can be further processed with other tools such as `jq`.
 
-More than simply collection information alone will be output, so you can filter as you need to.
+More than simply collection information alone may be output, so you can filter as you need to.
+
+Please note that **Steam must be closed to parse its LevelDB**! By design, LevelDB will lock in-use databases so that they cannot be accessed or modified.
 
 ## Overview
 ### LevelDB
