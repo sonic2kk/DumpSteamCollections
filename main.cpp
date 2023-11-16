@@ -1,7 +1,6 @@
 #include <filesystem>
 #include <format>
 #include <iostream>
-#include <regex>
 
 #include <stdlib.h>
 
@@ -73,7 +72,7 @@ int main(int argc, char *argv[])
 
     // Get Steam User ID to build known LevelDB key name containing collections information
     const std::string steam_user_id = argc >= 2 ? argv[1] : guess_steam_user_id(steam_path);
-    const std::regex steam_local_loopback_key(std::format("https://steamloopback.host.*U{}-cloud-storage-namespace", steam_user_id));
+    const std::string steam_local_loopback_keys[2] = { "https://steamloopback.host", "U" + steam_user_id + "-cloud-storage-namespace" };
     
     // Exit if we can't find Steam install location
     if (steam_path.length() <= 0)
@@ -101,7 +100,7 @@ int main(int argc, char *argv[])
     {
         // Iterate until we find key containing known LevelDB key name containing collections
         std::string current_key = steam_db_iterator->key().ToString();
-        if (std::regex_search(current_key, steam_local_loopback_key))
+        if ( (current_key.find(steam_local_loopback_keys[0]) != std::string::npos) && (current_key.find(steam_local_loopback_keys[1]) != std::string::npos) )
         {
             // Strip any characters preceding opening bracket
             std::string steam_db_collections_info = steam_db_iterator->value().ToString();
