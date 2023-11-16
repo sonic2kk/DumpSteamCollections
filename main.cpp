@@ -20,11 +20,13 @@ std::string get_steam_install_path()
 {
     const std::string home = getenv("HOME");
     // Possible paths where Steam for Linux may be installed
-    const std::string potential_steam_paths[4] = {
+    const std::string potential_steam_paths[6] = {
         home + "/.local/share/Steam",
         home + "/.steam/root",
         home + "/.steam/steam",
-        home + "/.steam/debian-installation"
+        home + "/.steam/debian-installation",  // Mainly newer Ubuntu, Linux Mint, and Pop!_OS
+        home + "/.var/app/com.valvesoftware.Steam/data/Steam",  // Flatpak Steam
+        home + "/snap/steam/common/.steam/root",  // Steam Snap
     };
 
     std::string found_steam_path;
