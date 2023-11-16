@@ -72,7 +72,7 @@ From here, the output can be parsed with a tool such as [JQ](https://github.com/
 ## Function to find the Steam Collection Key by name from the JSON file using jq
 function findSteamCollectionKeyFromName {
   findname="$1"
-  collections_json="$1"
+  collections_json="$2"
   while read -r collection_object; do
       collection_name="$( echo "${collection_object}" | jq -r '.name' )"
       collection_id="$( echo "${collection_object}" | jq -r '.id' )"
