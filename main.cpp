@@ -35,6 +35,7 @@ std::string get_steam_install_path()
         if (is_valid_steam_path(steam_path))
         {
             found_steam_path = steam_path;
+            break;
         }
     }
 
